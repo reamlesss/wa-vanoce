@@ -1,13 +1,15 @@
 import "./App.css";
 import Login from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
-
+import Auth from "./components/Auth";
 function App() {
   return (
-    <div className="App">
-      {/* <Login></Login> */}
-      {/* <RegisterForm></RegisterForm> */}
+    <div className='container d-flex justify-content-center align-items-center vh-100'>
+
+      <Auth></Auth>
+
     </div>
+
   );
 }
 
