@@ -60,3 +60,51 @@ exports.joinGroup = (req, res) => {
         }
     );
 };
+
+
+
+exports.getGroupDetails = (req, res) => {
+    const { groupId } = req.params;
+
+    // Fetch group name
+    db.query('SELECT name FROM `groups` WHERE id = ?', [groupId], (err, groupResults) => {
+        if (err) return res.status(500).json(err);
+        if (groupResults.length === 0) {
+            return res.status(404).json({ message: 'Group not found.' });
+        }
+
+        const groupName = groupResults[0].name;
+
+        // Fetch messages
+        db.query(
+            `SELECT m.id, m.message, m.timestamp, u.username AS sender
+             FROM Messages m
+             JOIN users u ON m.user_id = u.id
+             WHERE m.group_id = ?
+             ORDER BY m.timestamp ASC`,
+            [groupId],
+            (err, messageResults) => {
+                if (err) return res.status(500).json(err);
+
+                // Fetch members
+                db.query(
+                    `SELECT u.username
+                     FROM group_members gm
+                     JOIN users u ON gm.user_id = u.id
+                     WHERE gm.group_id = ?`,
+                    [groupId],
+                    (err, memberResults) => {
+                        if (err) return res.status(500).json(err);
+
+                        res.status(200).json({
+                            name: groupName,
+                            messages: messageResults,
+                            members: memberResults.map((member) => member.username),
+                        });
+                    }
+                );
+            }
+        );
+    });
+};
+

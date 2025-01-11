@@ -12,4 +12,8 @@ router.get('/all', groupController.getAllGroups);
 // Join Group Route
 router.post('/join', groupController.joinGroup);
 
+
+router.get('/:groupId/details', groupController.getGroupDetails);
+
+
 module.exports = router;
