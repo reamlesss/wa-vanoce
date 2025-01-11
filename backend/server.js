@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
 const groupRoutes = require('./routes/groupRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 
 dotenv.config();
 
@@ -16,7 +17,8 @@ app.use(bodyParser.json());
 
 // Routes
 app.use('/auth', authRoutes);
-app.use('/group',groupRoutes)
+app.use('/group',groupRoutes);
+app.use('/message',messageRoutes);
 
 // Start server
 app.listen(port, () => {
