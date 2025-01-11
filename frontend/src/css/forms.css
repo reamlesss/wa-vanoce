@@ -1,0 +1,14 @@
+.form-control{
+    background-color: rgb(24, 26, 24) !important;
+    color: white !important;
+    border: none !important;
+
+}
+.form-control:focus{
+    border-color: white;
+    box-shadow: none !important;
+}
+input{
+    border: 1px white solid !important;
+}
+
